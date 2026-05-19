@@ -132,6 +132,11 @@ function reverseGeocode(lat, lng) {
 // ─── 카카오 장소 검색 ───
 // 참고 코드 패턴: ps.keywordSearch(keyword, placesSearchCB) 방식 사용
 function searchNearbyRestaurants() {
+  if (typeof kakao === 'undefined' || typeof kakao.maps === 'undefined') {
+    document.getElementById('status').textContent = '❌ 카카오 SDK 미로드. API 키와 도메인 등록을 확인하세요.';
+    return;
+  }
+
   const statusEl = document.getElementById('status');
   statusEl.textContent = '🔍 식당을 검색하는 중...';
 
@@ -412,6 +417,10 @@ function spin() {
 
 // ─── 다시 검색 ───
 function reloadPlaces() {
+  if (typeof kakao === 'undefined' || typeof kakao.maps === 'undefined') {
+    document.getElementById('status').textContent = '❌ 카카오 SDK가 로드되지 않았습니다. API 키와 도메인 등록을 확인하세요.';
+    return;
+  }
   allPlaces = [];
   filteredPlaces = [];
   document.getElementById('spinBtn').disabled = true;

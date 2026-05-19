@@ -45,7 +45,9 @@
   <p class="menu-count" id="menuCount"></p>
 
   <!-- 카카오 SDK (app.js의 CONFIG.KAKAO_APP_KEY와 동일한 키 사용) -->
-  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b73aa51f19448374889af9f6d2e4036b&libraries=services&autoload=false"></script>
+  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b73aa51f19448374889af9f6d2e4036b&libraries=services&autoload=false"
+    onerror="document.getElementById('status').textContent='❌ 카카오 SDK 로드 실패. API키/도메인 확인 필요';">
+  </script>
   <script src="app.js"></script>
 </body>
 </html>
