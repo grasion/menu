@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&display=swap');
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: 'Noto Sans KR', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: white;
+  padding: 20px;
+}
+
+h1 { font-size: 1.7rem; font-weight: 900; margin-bottom: 4px; }
+
+.subtitle {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 8px;
+}
+
+/* 현재 위치 주소 */
+#location-info {
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 6px;
+}
+
+/* 상태 메시지 */
+#status {
+  font-size: 0.85rem;
+  color: #ffd32a;
+  margin-bottom: 10px;
+  min-height: 1.2em;
+}
+
+/* 결과 표시 */
+#result {
+  font-size: 1.4rem;
+  font-weight: 700;
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  transition: all 0.3s;
+  text-align: center;
+  padding: 0 10px;
+}
+
+#result.highlight {
+  font-size: 1.7rem;
+  color: #ffd32a;
+  text-shadow: 0 0 20px rgba(255,211,42,0.5);
+  animation: popIn 0.4s ease-out;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  70% { transform: scale(1.15); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 선택된 식당 상세 */
+#selectedInfo {
+  margin-top: 4px;
+  margin-bottom: 12px;
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  text-align: center;
+  min-height: 1.2em;
+  padding: 0 10px;
+}
+#selectedInfo a { color: #7ed6df; text-decoration: none; }
+#selectedInfo a:hover { text-decoration: underline; }
+
+/* 필터 바 */
+.control-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.filter-btn {
+  padding: 7px 16px;
+  font-size: 0.85rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-btn:hover { background: rgba(255,255,255,0.15); }
+.filter-btn.active {
+  background: rgba(255,211,42,0.2);
+  color: #ffd32a;
+  border-color: rgba(255,211,42,0.5);
+}
+
+/* 반경 조절 */
+.radius-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 12px;
+  padding: 8px 14px;
+  margin-bottom: 14px;
+}
+.radius-control label {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  white-space: nowrap;
+}
+.radius-control input[type="range"] {
+  width: 110px;
+  accent-color: #ffd32a;
+  cursor: pointer;
+}
+.radius-control .radius-value {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffd32a;
+  min-width: 48px;
+  text-align: center;
+}
+.radius-control .apply-btn {
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: rgba(255,211,42,0.15);
+  color: #ffd32a;
+  border: 1px solid rgba(255,211,42,0.4);
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.radius-control .apply-btn:hover {
+  background: rgba(255,211,42,0.3);
+}
+
+/* 캔버스 (돌림판) */
+.canvas-container {
+  position: relative;
+  margin-bottom: 20px;
+}
+.arrow {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 14px solid transparent;
+  border-right: 14px solid transparent;
+  border-top: 28px solid #ff4757;
+  z-index: 10;
+  filter: drop-shadow(0 2px 6px rgba(255,71,87,0.6));
+}
+canvas {
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px rgba(255,255,255,0.12), 0 8px 32px rgba(0,0,0,0.4);
+  transition: transform 4s cubic-bezier(0.05, 0, 0, 1);
+}
+
+/* 버튼 */
+.btn-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.btn-spin {
+  padding: 13px 40px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: linear-gradient(135deg, #ff4757, #ff6b81);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 15px rgba(255,71,87,0.4);
+}
+.btn-spin:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,71,87,0.5); }
+.btn-spin:active { transform: scale(0.96); }
+.btn-spin:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.btn-secondary {
+  padding: 13px 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: 'Noto Sans KR', sans-serif;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: 2px solid rgba(255,255,255,0.2);
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-secondary:hover { background: rgba(255,255,255,0.2); }
+
+/* 메뉴 카운트 */
+.menu-count {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.45);
+}
+
+/* 컨페티 */
+.confetti-piece {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  z-index: 50;
+  pointer-events: none;
+  animation: confettiFall 2.5s ease-out forwards;
+}
+@keyframes confettiFall {
+  0% { opacity: 1; transform: translateY(0) rotate(0deg); }
+  100% { opacity: 0; transform: translateY(100vh) rotate(720deg); }
+}

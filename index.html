@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>오늘 뭐 먹지? - 근처 식당 돌림판</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>🍽️ 근처 식당 돌림판</h1>
+  <p class="subtitle">내 위치 기반으로 근처 식당을 찾아 랜덤 추천!</p>
+
+  <div id="location-info">📍 위치를 확인하는 중...</div>
+  <div id="status"></div>
+  <div id="result">식당을 불러오는 중...</div>
+  <div id="selectedInfo"></div>
+
+  <!-- 시간대 필터 -->
+  <div class="control-bar">
+    <button class="filter-btn active" data-filter="lunch" onclick="setFilter('lunch')">🌞 점심</button>
+    <button class="filter-btn" data-filter="dinner" onclick="setFilter('dinner')">🌆 저녁</button>
+    <button class="filter-btn" data-filter="latenight" onclick="setFilter('latenight')">🌙 야식</button>
+  </div>
+
+  <!-- 반경 조절 -->
+  <div class="radius-control">
+    <label>📏 반경</label>
+    <input type="range" id="radiusRange" min="500" max="5000" step="250" value="1500" oninput="updateRadiusLabel()">
+    <span class="radius-value" id="radiusLabel">1.5km</span>
+    <button class="apply-btn" onclick="applyRadius()">적용</button>
+  </div>
+
+  <!-- 돌림판 -->
+  <div class="canvas-container">
+    <div class="arrow"></div>
+    <canvas id="wheelCanvas" width="380" height="380"></canvas>
+  </div>
+
+  <!-- 버튼 -->
+  <div class="btn-row">
+    <button class="btn-spin" id="spinBtn" onclick="spin()" disabled>🎰 돌리기!</button>
+    <button class="btn-secondary" onclick="reloadPlaces()">🔄 다시 검색</button>
+  </div>
+  <p class="menu-count" id="menuCount"></p>
+
+  <!-- 카카오 SDK (app.js의 CONFIG.KAKAO_APP_KEY와 동일한 키 사용) -->
+  <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=b73aa51f19448374889af9f6d2e4036b&libraries=services&autoload=false"></script>
+  <script src="app.js"></script>
+</body>
+</html>

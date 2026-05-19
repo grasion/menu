@@ -1,0 +1,10 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# 설정 파일 (API 키 포함 시 주석 해제)
+ config.ini
